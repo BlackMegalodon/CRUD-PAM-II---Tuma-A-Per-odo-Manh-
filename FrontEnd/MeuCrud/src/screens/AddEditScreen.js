@@ -11,6 +11,7 @@ export default function AddEditScreen({route, navigation}) {
     const [firstName,setFirstName] = useState(person?.firstName)
     const [lastName,setLastName] = useState(person?.lastName);
     const [email,setEmail] = useState(person?.email);
+    const [phone,setPhone] = useState(person?.phone)
 
     async function save() {
         const data = {firstName,lastName,email}
@@ -28,13 +29,13 @@ return(
     <View style={styles.container}>
 
         <TextInput
-        placeholder="First Name"
+        placeholder="Nome"
         value={firstName}
         onChangeText={setFirstName}
         />
 
         <TextInput
-        placeholder="Last Name"
+        placeholder="Sobrenome"
         value={lastName}
         onChangeText={setLastName}
         />
@@ -43,6 +44,12 @@ return(
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        />
+
+        <TextInput
+        placeholder="Telefone"
+        value={phone}
+        onChangeText={setPhone}
         />
 
         <Button

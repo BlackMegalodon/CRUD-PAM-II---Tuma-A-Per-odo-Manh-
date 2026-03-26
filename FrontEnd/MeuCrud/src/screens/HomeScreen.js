@@ -42,8 +42,9 @@ export default function HomeScreen({ navigation }) {
         </view>
     );
 }
-function CardPersonal({ item, navigation, refresh }) {
-    return (
+
+function CardPersonal({item, navigation, refresh}){
+    return(
 
         <View style={styles.card}>
 
@@ -56,22 +57,26 @@ function CardPersonal({ item, navigation, refresh }) {
                 <Text style={styles.email}>
                     {item.email}
                 </Text>
+                
+                <Text style={styles.phone}>
+                    {item.phone}
+                </Text>
 
             </View>
 
             <View>
 
                 <Button
-                    title="Editar"
-                    onPress={() => navigation.navigate("AddEdit", { person: item })}
+                title="Editar"
+                onPress={()=> navigation.navigate("AddEdit",{person:item})}
                 />
 
                 <Button
-                    title="Deletar"
-                    onPress={async () => {
-                        await deletePerson(item.id);
-                        refresh();
-                    }}
+                title="Deletar"
+                onPress={async ()=>{
+                    await deletePerson(item.id);
+                    refresh();
+                }}
                 />
 
             </View>
