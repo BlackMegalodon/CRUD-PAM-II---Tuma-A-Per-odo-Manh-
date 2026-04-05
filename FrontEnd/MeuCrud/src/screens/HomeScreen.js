@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, text, FlatList, Button } from "react-native";
+import { View, Text, FlatList, Button, TextInput } from "react-native";
 
 import styles from "../styles/styles";
 
@@ -7,6 +7,16 @@ import { getPeople, deletePerson } from "../servers/peopleCrud";
 
 export default function HomeScreen({ navigation }) {
     const [people, setPeople] = useState([]);
+    let [filter, setfilter] = useState("");
+
+     const usefilter = (texto) => {
+        if((isNaN(texto))&&(texto.length>0)){ 
+            let texto2 = texto.charAt(0).toUpperCase() + texto.slice(1)
+            setfilter(`?firstname=${encodeURIComponent(texto2)}`);
+        }else{
+            setfilter("");
+        }
+    }
 
     async function loadPeople() {
 
@@ -20,11 +30,13 @@ export default function HomeScreen({ navigation }) {
 
     return (
 
-        <view style={styles.container}>
+        <View style={styles.container}>
 
-            <text style={styles.title}>Pessoas</text>
+            <Text style={styles.title}>Pessoas</Text>
 
-            <button title="Adicionar Pessoa"
+            <TextInput placeholder="Procure pelo Primeiro Nome" onSubmitEditing={(texto) => usefilter(texto.nativeEvent.text)}></TextInput>
+
+            <Button title="Adicionar Pessoa"
                 onPress={() => navigation.navigate("AddEdit")} />
 
             <FlatList
@@ -39,7 +51,7 @@ export default function HomeScreen({ navigation }) {
                     />
                 )}
             />
-        </view>
+        </View>
     );
 }
 
@@ -57,7 +69,7 @@ function CardPersonal({item, navigation, refresh}){
                 <Text style={styles.email}>
                     {item.email}
                 </Text>
-                
+
                 <Text style={styles.phone}>
                     {item.phone}
                 </Text>

@@ -23,43 +23,43 @@ export default function AddEditScreen({route, navigation}) {
         }
         navigation.goBack();
     }
+
+    return(
+        <View style={styles.container}>
+    
+            <TextInput
+            placeholder="Nome"
+            value={firstName}
+            onChangeText={setFirstName}
+            />
+    
+            <TextInput
+            placeholder="Sobrenome"
+            value={lastName}
+            onChangeText={setLastName}
+            />
+    
+            <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            />
+    
+            <TextInput
+            placeholder="Telefone"
+            value={phone}
+            onChangeText={setPhone}
+            />
+    
+            <Button
+            title="Salvar"
+            onPress={save}
+            />
+            
+            <Button
+            title="Cancelar"
+            onPress={()=> navigation.goBack()}
+            />
+        </View>
+    )
 }
-
-return(
-    <View style={styles.container}>
-
-        <TextInput
-        placeholder="Nome"
-        value={firstName}
-        onChangeText={setFirstName}
-        />
-
-        <TextInput
-        placeholder="Sobrenome"
-        value={lastName}
-        onChangeText={setLastName}
-        />
-
-        <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        />
-
-        <TextInput
-        placeholder="Telefone"
-        value={phone}
-        onChangeText={setPhone}
-        />
-
-        <Button
-        title="Salvar"
-        onPress={save}
-        />
-        
-        <Button
-        title="Cancelar"
-        onPress={()=> navigation.goBack()}
-        />
-    </View>
-)
