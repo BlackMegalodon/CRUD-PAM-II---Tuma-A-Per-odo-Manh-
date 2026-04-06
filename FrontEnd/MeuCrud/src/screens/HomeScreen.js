@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Button, TextInput } from "react-native";
+import React, { use, useEffect, useState } from "react";
+import { View, Text, FlatList, Button, TextInput, ActivityIndicator } from "react-native";
 
 import styles from "../styles/styles";
 
@@ -7,13 +7,14 @@ import { getPeople, deletePerson } from "../servers/peopleCrud";
 
 export default function HomeScreen({ navigation }) {
     const [people, setPeople] = useState([]);
+    const [loading, setLoading] = useState(true);
     let [filter, setfilter] = useState("");
 
-     const usefilter = (texto) => {
-        if((isNaN(texto))&&(texto.length>0)){ 
+    const usefilter = (texto) => {
+        if ((isNaN(texto)) && (texto.length > 0)) {
             let texto2 = texto.charAt(0).toUpperCase() + texto.slice(1)
             setfilter(`?firstname=${encodeURIComponent(texto2)}`);
-        }else{
+        } else {
             setfilter("");
         }
     }
@@ -23,10 +24,11 @@ export default function HomeScreen({ navigation }) {
         const data = await getPeople();
 
         setPeople(data);
+        setLoading(false);
     }
-    useState(() => {
-        loadPeople();
-    }, []);
+    useEffect(() => {
+        loadPeople(filter);
+    }, [filter]);
 
     return (
 
@@ -39,24 +41,28 @@ export default function HomeScreen({ navigation }) {
             <Button title="Adicionar Pessoa"
                 onPress={() => navigation.navigate("AddEdit")} />
 
-            <FlatList
-                data={people}
-                keyExtractor={(item) => item.id.toString()}
+            {loading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+                <FlatList
+                    data={people}
+                    keyExtractor={(item) => item.id.toString()}
 
-                renderItem={({ item }) => (
-                    <CardPersonal
-                        item={item}
-                        navigation={navigation}
-                        refresh={loadPeople}
-                    />
-                )}
-            />
+                    renderItem={({ item }) => (
+                        <CardPersonal
+                            item={item}
+                            navigation={navigation}
+                            refresh={loadPeople}
+                        />
+                    )}
+                />
+            )}
         </View>
     );
 }
 
-function CardPersonal({item, navigation, refresh}){
-    return(
+function CardPersonal({ item, navigation, refresh }) {
+    return (
 
         <View style={styles.card}>
 
@@ -79,16 +85,16 @@ function CardPersonal({item, navigation, refresh}){
             <View>
 
                 <Button
-                title="Editar"
-                onPress={()=> navigation.navigate("AddEdit",{person:item})}
+                    title="Editar"
+                    onPress={() => navigation.navigate("AddEdit", { person: item })}
                 />
 
                 <Button
-                title="Deletar"
-                onPress={async ()=>{
-                    await deletePerson(item.id);
-                    refresh();
-                }}
+                    title="Deletar"
+                    onPress={async () => {
+                        await deletePerson(item.id);
+                        refresh();
+                    }}
                 />
 
             </View>
