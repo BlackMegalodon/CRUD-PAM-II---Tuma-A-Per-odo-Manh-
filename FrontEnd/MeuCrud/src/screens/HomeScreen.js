@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Button, TextInput, ActivityIndicator } from "react-native";
 
 import styles from "../styles/styles";
@@ -8,7 +8,7 @@ import { getPeople, deletePerson } from "../servers/peopleCrud";
 export default function HomeScreen({ navigation }) {
     const [people, setPeople] = useState([]);
     const [loading, setLoading] = useState(true);
-    let [filter, setfilter] = useState("");
+    const [filter, setfilter] = useState("");
 
     const usefilter = (texto) => {
         if ((isNaN(texto)) && (texto.length > 0)) {
@@ -21,13 +21,14 @@ export default function HomeScreen({ navigation }) {
 
     async function loadPeople() {
 
-        const data = await getPeople();
+        const data = await getPeople(filter);
 
         setPeople(data);
         setLoading(false);
     }
+
     useEffect(() => {
-        loadPeople(filter);
+        loadPeople();
     }, [filter]);
 
     return (
@@ -36,7 +37,7 @@ export default function HomeScreen({ navigation }) {
 
             <Text style={styles.title}>Pessoas</Text>
 
-            <TextInput placeholder="Procure pelo Primeiro Nome" onSubmitEditing={(texto) => usefilter(texto.nativeEvent.text)}></TextInput>
+            <TextInput placeholder="Procure pelo Primeiro Nome" onChangeText={(texto) => usefilter(texto)}></TextInput>
 
             <Button title="Adicionar Pessoa"
                 onPress={() => navigation.navigate("AddEdit")} />

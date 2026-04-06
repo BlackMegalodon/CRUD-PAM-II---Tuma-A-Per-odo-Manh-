@@ -38,5 +38,9 @@ export default StyleSheet.create({
         padding: 10,
         backgroundColor:"#4CAF50",
         borderRadius:5
+    },
+
+    input:{
+        borderWidth: 5,
     }
 })

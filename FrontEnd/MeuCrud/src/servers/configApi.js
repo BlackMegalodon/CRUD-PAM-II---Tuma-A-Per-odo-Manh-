@@ -1,1 +1,1 @@
-export const API_URL = "https://wet-falcons-prove.loca.lt"
+export const API_URL = "http:localhost:3000"

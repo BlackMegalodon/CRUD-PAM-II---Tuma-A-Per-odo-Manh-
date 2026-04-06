@@ -28,24 +28,28 @@ export default function AddEditScreen({route, navigation}) {
         <View style={styles.container}>
     
             <TextInput
+            style={styles.input}
             placeholder="Nome"
             value={firstName}
             onChangeText={setFirstName}
             />
     
             <TextInput
+            style={styles.input}
             placeholder="Sobrenome"
             value={lastName}
             onChangeText={setLastName}
             />
     
             <TextInput
+            style={styles.input}
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
             />
     
             <TextInput
+            style={styles.input}
             placeholder="Telefone"
             value={phone}
             onChangeText={setPhone}
